@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PestoGuard | Professional Pest Control & Extermination Services</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for crisp typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E%3Ctext y=%2226%22 font-size=%2224%22>🛡️</text></svg>">
+</head>
+<body class="custom-spray-cursor">
+
+    <!-- Interactive Spray Can Cursor Graphic -->
+    <div id="spray-can-cursor" aria-hidden="true">
+        <svg class="spray-can-graphic" viewBox="0 0 64 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Aerosol Mist Spurt -->
+            <path d="M12 18 C 5 12, 2 5, 0 0" stroke="#34d399" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <path d="M16 16 C 14 8, 8 2, 4 -4" stroke="#6ee7b7" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            <!-- Spray Nozzle -->
+            <rect x="22" y="14" width="12" height="10" rx="3" fill="#334155" />
+            <rect x="18" y="18" width="6" height="4" rx="1.5" fill="#e2e8f0" />
+            <rect x="25" y="24" width="6" height="4" fill="#94a3b8" />
+            <!-- Canister Body -->
+            <rect x="16" y="28" width="24" height="46" rx="6" fill="#047857" />
+            <!-- Hazard / Safe Badge on Can -->
+            <rect x="18" y="40" width="20" height="18" rx="3" fill="#10b981" />
+            <circle cx="28" cy="49" r="6" fill="#ffffff" />
+            <path d="M25 49 L31 49 M28 46 L28 52" stroke="#047857" stroke-width="2" stroke-linecap="round"/>
+            <!-- Bottom Rim -->
+            <path d="M16 68 C 16 73, 40 73, 40 68" stroke="#064e3b" stroke-width="2" fill="none"/>
+        </svg>
+    </div>
+
+    <!-- Background Canvas for Crawling Insects & Spray Mist -->
+    <canvas id="pest-canvas"></canvas>
+
+    <!-- Top Emergency Helpline Banner -->
+    <div class="emergency-topbar">
+        <div>
+            <span>📍 Operational Hubs: <strong>Siliguri • Purnia • Katihar • Kishanganj • Bahadurganj • Thakurganj</strong> (Upto 500 KM Range)</span>
+        </div>
+        <div class="contact-links">
+            <a href="tel:+916204139133">📞 Call: +91 62041 39133</a>
+            <a href="https://wa.me/916204139133?text=Hi%20PestoGuard%2C%20I%20need%20pest%20control%20service." target="_blank">💬 WhatsApp: +91 62041 39133</a>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="brand-logo">
+            <div class="logo-icon">🛡️</div>
+            <span>Pesto<span>Guard</span></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#services">Pest Treatments</a></li>
+            <li><a href="#service-areas">Service Areas (500 KM)</a></li>
+            <li><a href="#calculator">Price Calculator</a></li>
+            <li><a href="#leadership">Founders</a></li>
+            <li><a href="#booking">Book Inspection</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://wa.me/916204139133?text=Hi%20PestoGuard%2C%20I%20want%20to%20book%20a%20free%20inspection." target="_blank" class="btn-primary-nav">WhatsApp: +91 62041 39133</a></li>
+        </ul>
+    </nav>
+
+    <!-- Floating Interactive Game HUD / Controller (Pixel-Perfect Alignment) -->
+    <div class="game-hud">
+        <div class="hud-section">
+            <div class="hud-stat">
+                <span>Infestation:</span>
+                <span id="stat-pests-alive" class="hud-badge danger">23</span>
+            </div>
+            <div class="hud-stat">
+                <span>Kills:</span>
+                <span id="stat-pests-killed" class="hud-badge">0</span>
+            </div>
+        </div>
+
+        <div class="hud-section">
+            <button id="btn-toggle-spray-mode" class="hud-btn active" title="Switch between pesticide spray gun cursor and normal cursor">
+                <span class="icon">🔫</span> Spray Gun
+            </button>
+            <button id="btn-toggle-sound" class="hud-btn" title="Toggle audio sound effects">
+                🔊 Sound: On
+            </button>
+        </div>
+
+        <div class="hud-section">
+            <div class="hud-spawn-buttons">
+                <button id="btn-spawn-ant" class="hud-btn" title="Spawn Ants">🐜 +Ant</button>
+                <button id="btn-spawn-termite" class="hud-btn" title="Spawn Termites (Dimak)">🪵 +Dimak</button>
+                <button id="btn-spawn-roach" class="hud-btn" title="Spawn Cockroaches">🪳 +Roach</button>
+                <button id="btn-spawn-spider" class="hud-btn" title="Spawn Spiders (Makdi)">🕷️ +Spider</button>
+            </div>
+            <button id="btn-deploy-bomb" class="hud-btn bomb" title="Spray high-intensity pest exterminator cloud">
+                💣 Bug Bomb
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-pill">
+                    <span>✨ #1 Rated Pest Control Service</span>
+                    <span>•</span>
+                    <span>100% Odorless & Pet-Safe</span>
+                </div>
+                <h1 class="hero-title">
+                    Ghar se Kira, Makdi, Ant aur Dimak ka <span class="highlight">Permanent Khatma!</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Certified eco-friendly pesticide solutions. Click anywhere on the screen with your spray cursor to eliminate or chase away pests in real-time!
+                </p>
+
+                <!-- Interactive Spray Notice Banner -->
+                <div class="interactive-spray-banner">
+                    <div class="spray-banner-icon">🎯</div>
+                    <div class="spray-banner-text">
+                        <h4>Interactive Spray Zone Active!</h4>
+                        <p><strong>Click & hold</strong> or drag your mouse/touch on any crawling insect to spray pesticide mist. Watch them twitch & eliminate or flee!</p>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#booking" class="btn-hero-primary">
+                        <span>📅 Book Free Inspection</span>
+                    </a>
+                    <a href="#calculator" class="btn-hero-secondary">
+                        <span>⚡ Calculate Price</span>
+                    </a>
+                    <a href="https://wa.me/916204139133?text=Hi%20PestoGuard%2C%20I%20want%20to%20book%20a%20pest%20control%20treatment." target="_blank" class="btn-hero-whatsapp">
+                        <span>💬 WhatsApp: +91 62041 39133</span>
+                    </a>
+                </div>
+
+                <div class="trust-badges">
+                    <div class="badge-item">
+                        <span class="badge-icon">🌿</span>
+                        <span>100% Herbal & Odorless</span>
+                    </div>
+                    <div class="badge-item">
+                        <span class="badge-icon">👶</span>
+                        <span>Child & Pet Safe Chemicals</span>
+                    </div>
+                    <div class="badge-item">
+                        <span class="badge-icon">🛡️</span>
+                        <span>Up to 5 Years Warranty</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Right Card: Live Infestation Radar -->
+            <div class="hero-radar-card">
+                <div class="radar-header">
+                    <h3>Infestation Status</h3>
+                    <span id="infestation-status-badge" class="hud-badge danger">⚠️ Severe Infestation!</span>
+                </div>
+
+                <div class="infestation-meter">
+                    <div class="meter-label-row">
+                        <span>Current Threat Level</span>
+                        <span>Live Activity</span>
+                    </div>
+                    <div class="meter-track">
+                        <div id="infestation-bar" class="meter-fill"></div>
+                    </div>
+                </div>
+
+                <div class="target-pests-grid">
+                    <div class="target-pest-chip">
+                        <span class="pest-emoji">🪵</span>
+                        <div class="pest-chip-info">
+                            <strong>Dimak (Termites)</strong>
+                            <span>Wood borer damage</span>
+                        </div>
+                    </div>
+                    <div class="target-pest-chip">
+                        <span class="pest-emoji">🐜</span>
+                        <div class="pest-chip-info">
+                            <strong>Cheenti (Ants)</strong>
+                            <span>Kitchen infestation</span>
+                        </div>
+                    </div>
+                    <div class="target-pest-chip">
+                        <span class="pest-emoji">🪳</span>
+                        <div class="pest-chip-info">
+                            <strong>Cockroaches</strong>
+                            <span>Disease carriers</span>
+                        </div>
+                    </div>
+                    <div class="target-pest-chip">
+                        <span class="pest-emoji">🕷️</span>
+                        <div class="pest-chip-info">
+                            <strong>Makdi (Spiders)</strong>
+                            <span>Cobwebs & venom risk</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-card-cta">
+                    <p>Have pests crawling in your home right now?</p>
+                    <a href="tel:+916204139133" class="btn-radar-cta">📞 Call Dispatch: +91 62041 39133</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Pest Identification & Treatment Guide -->
+    <section id="services" class="section-wrapper">
+        <div class="section-title-center">
+            <span class="section-tag">Targeted Extermination</span>
+            <h2 class="section-title">Specialized Treatments for Every Pest</h2>
+            <p class="section-desc">We use targeted WHO-approved formulations specifically engineered for each pest species without harmful fumes.</p>
+        </div>
+
+        <div class="pest-guide-grid">
+            <!-- Termite / Dimak -->
+            <div class="pest-card" data-pest="termite">
+                <span class="pest-card-badge">High Property Damage</span>
+                <div class="pest-card-icon">🪵</div>
+                <h3>Dimak (Termite) Control</h3>
+                <p>Termites silently hollow out doors, wardrobes, and structural wood. Our DRILL-FILL-SEAL method eliminates the entire queen colony.</p>
+                <ul class="pest-features">
+                    <li>Chemical barrier around foundation</li>
+                    <li>Drill-fill-seal subterranean piping</li>
+                    <li>5-Year Replacement Warranty</li>
+                </ul>
+                <button class="btn-test-spray">🎯 Spawn Dimak & Spray Test</button>
+            </div>
+
+            <!-- Ant / Cheenti -->
+            <div class="pest-card" data-pest="ant">
+                <span class="pest-card-badge">Food Contamination</span>
+                <div class="pest-card-icon">🐜</div>
+                <h3>Ant (Cheenti) Eradication</h3>
+                <p>Ants build underground super-colonies inside wall joints and slabs. We deploy micro-gel baits that worker ants carry directly into the nest.</p>
+                <ul class="pest-features">
+                    <li>Odorless micro-gel baiting</li>
+                    <li>Wall-skirting perimeter spray</li>
+                    <li>100% Nest elimination within 48h</li>
+                </ul>
+                <button class="btn-test-spray">🎯 Spawn Ants & Spray Test</button>
+            </div>
+
+            <!-- Cockroach -->
+            <div class="pest-card" data-pest="cockroach">
+                <span class="pest-card-badge">Bacteria & Allergy</span>
+                <div class="pest-card-icon">🪳</div>
+                <h3>Cockroach Gel Treatment</h3>
+                <p>Cockroaches breed rapidly inside kitchen cabinets, sinks, and drains. Our herbal syringe gel requires zero kitchen emptying.</p>
+                <ul class="pest-features">
+                    <li>No need to empty kitchen cabinets</li>
+                    <li>Drain foamer treatment included</li>
+                    <li>Long-lasting 90-day residual barrier</li>
+                </ul>
+                <button class="btn-test-spray">🎯 Spawn Cockroaches & Spray Test</button>
+            </div>
+
+            <!-- Spider / Makdi -->
+            <div class="pest-card" data-pest="spider">
+                <span class="pest-card-badge">Cobwebs & Bites</span>
+                <div class="pest-card-icon">🕷️</div>
+                <h3>Spider (Makdi) & Web Removal</h3>
+                <p>Thorough mechanical web clearing combined with repellent mist that stops spiders from rebuilding webs on ceiling corners and balconies.</p>
+                <ul class="pest-features">
+                    <li>Ceiling & balcony web knockdown</li>
+                    <li>Invisible surface repellent barrier</li>
+                    <li>Repels flying insect food sources</li>
+                </ul>
+                <button class="btn-test-spray">🎯 Spawn Spiders & Spray Test</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviceable Areas & 500 KM Coverage Network -->
+    <section id="service-areas" class="section-wrapper service-areas-section">
+        <div class="section-title-center">
+            <span class="section-tag">Regional Operational Network</span>
+            <h2 class="section-title">Serviceable Areas Across 500 KM Range</h2>
+            <p class="section-desc">We operate dedicated pest control hubs covering Siliguri, Purnia, Katihar, Kishanganj, Bahadurganj, Thakurganj and every district within a 500 KM operational radius.</p>
+        </div>
+
+        <div class="range-highlight-banner">
+            <div class="range-info">
+                <h3><span>🛰️</span> Up to 500 KM Rapid Coverage Range</h3>
+                <p>Equipped with GPS-tracked mobile exterminator vans carrying industrial micro-drill termiticide kits, thermal foggers, and odorless herbal formulations to reach your doorstep within 90 minutes to same-day guaranteed arrival.</p>
+            </div>
+            <div class="range-badge">
+                <span>⚡ 500 KM Active Radius</span>
+            </div>
+        </div>
+
+        <div class="hubs-grid">
+            <div class="hub-card">
+                <div class="hub-header">
+                    <div class="hub-icon">🏔️</div>
+                    <span class="hub-status">🟢 Active Dispatch</span>
+                </div>
+                <h3>Siliguri Hub</h3>
+                <p>Serving residential homes, hotels, tea estates, and commercial complexes across Siliguri & Darjeeling Foothills.</p>
+                <ul class="hub-details">
+                    <li>📍 Sevoke Road, Pradhan Nagar, Matigara</li>
+                    <li>⏱️ Rapid Dispatch: 60 - 90 Mins</li>
+                </ul>
+            </div>
+
+            <div class="hub-card">
+                <div class="hub-header">
+                    <div class="hub-icon">🌾</div>
+                    <span class="hub-status">🟢 Active Dispatch</span>
+                </div>
+                <h3>Purnia Hub</h3>
+                <p>Central operations command handling severe termite (dimak) drill barriers, apartments, and agricultural grain godowns.</p>
+                <ul class="hub-details">
+                    <li>📍 Line Bazar, Bhatta Bazar, Gulabbagh</li>
+                    <li>⏱️ Rapid Dispatch: 45 - 90 Mins</li>
+                </ul>
+            </div>
+
+            <div class="hub-card">
+                <div class="hub-header">
+                    <div class="hub-icon">🚂</div>
+                    <span class="hub-status">🟢 Active Dispatch</span>
+                </div>
+                <h3>Katihar Hub</h3>
+                <p>Specialized cockroach syringe gel, rodent containment, and residential termite eradication along the junction corridor.</p>
+                <ul class="hub-details">
+                    <li>📍 Mirchaibari, Railway Colony, Barari</li>
+                    <li>⏱️ Rapid Dispatch: 60 - 90 Mins</li>
+                </ul>
+            </div>
+
+            <div class="hub-card">
+                <div class="hub-header">
+                    <div class="hub-icon">🌱</div>
+                    <span class="hub-status">🟢 Active Dispatch</span>
+                </div>
+                <h3>Kishanganj Hub</h3>
+                <p>Pest prevention for border tea processing estates, schools, hospitals, and independent homes with 100% pet-safe sprays.</p>
+                <ul class="hub-details">
+                    <li>📍 Caltex Chowk, Bahadurganj Road, Motibagh</li>
+                    <li>⏱️ Rapid Dispatch: 45 - 90 Mins</li>
+                </ul>
+            </div>
+
+            <div class="hub-card">
+                <div class="hub-header">
+                    <div class="hub-icon">🏡</div>
+                    <span class="hub-status">🟢 Active Dispatch</span>
+                </div>
+                <h3>Bahadurganj Hub</h3>
+                <p>Serving township homes, retail establishments, and countryside farms with long-lasting odorless perimeter defense.</p>
+                <ul class="hub-details">
+                    <li>📍 Main Bazar, Block Road, Jhula Chowk</li>
+                    <li>⏱️ Rapid Dispatch: 60 Mins</li>
+                </ul>
+            </div>
+
+            <div class="hub-card">
+                <div class="hub-header">
+                    <div class="hub-icon">🏘️</div>
+                    <span class="hub-status">🟢 Active Dispatch</span>
+                </div>
+                <h3>Thakurganj Hub</h3>
+                <p>Complete anti-termite wood treatment, spider web clearance, and ant nest eradication for homes and commercial shops.</p>
+                <ul class="hub-details">
+                    <li>📍 Station Road, Gandhi Chowk, Galgalia Link</li>
+                    <li>⏱️ Rapid Dispatch: 60 Mins</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instant Quote Calculator -->
+    <section id="calculator" class="section-wrapper calculator-section">
+        <div class="section-title-center">
+            <span class="section-tag">Transparent Pricing</span>
+            <h2 class="section-title">Instant Pest Control Quote Calculator</h2>
+            <p class="section-desc">Select your home size and pest issues to calculate an immediate, upfront price with zero hidden fees.</p>
+        </div>
+
+        <div class="calculator-card">
+            <!-- Left Inputs -->
+            <div class="calc-inputs-pane">
+                <div class="calc-group">
+                    <label class="calc-label" for="calc-property">1. Select Property Configuration:</label>
+                    <select id="calc-property" class="calc-select">
+                        <option value="1bhk">1 BHK Apartment (up to 650 sq ft)</option>
+                        <option value="2bhk" selected>2 BHK Apartment (700 - 1100 sq ft)</option>
+                        <option value="3bhk">3 BHK Apartment (1200 - 1800 sq ft)</option>
+                        <option value="villa">Independent Villa / Row House</option>
+                        <option value="commercial">Commercial Office / Restaurant</option>
+                    </select>
+                </div>
+
+                <div class="calc-group">
+                    <label class="calc-label">2. Select Infestation Types:</label>
+                    <div class="pest-checkbox-grid">
+                        <label class="pest-check-label">
+                            <input type="checkbox" class="calc-pest-check" value="cockroach" checked>
+                            <span>🪳 Cockroaches</span>
+                        </label>
+                        <label class="pest-check-label">
+                            <input type="checkbox" class="calc-pest-check" value="ant" checked>
+                            <span>🐜 Ants (Cheenti)</span>
+                        </label>
+                        <label class="pest-check-label">
+                            <input type="checkbox" class="calc-pest-check" value="termite">
+                            <span>🪵 Dimak (Termites)</span>
+                        </label>
+                        <label class="pest-check-label">
+                            <input type="checkbox" class="calc-pest-check" value="bedbug">
+                            <span>🛏️ Bedbugs (Khatmal)</span>
+                        </label>
+                        <label class="pest-check-label">
+                            <input type="checkbox" class="calc-pest-check" value="rodent">
+                            <span>🐀 Rodents (Chooha)</span>
+                        </label>
+                        <label class="pest-check-label">
+                            <input type="checkbox" class="calc-pest-check" value="mosquito">
+                            <span>🦟 Mosquitoes</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="calc-group">
+                    <label class="calc-label" for="calc-frequency">3. Service Protection Plan:</label>
+                    <select id="calc-frequency" class="calc-select">
+                        <option value="single">Single Treatment (1-Month Warranty)</option>
+                        <option value="quarterly" selected>Quarterly Protection (4 Visits/Year - Save 25%)</option>
+                        <option value="yearly">Yearly AMC (Unlimited Free Visits - Save 35%)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Right Summary -->
+            <div class="calc-summary-pane">
+                <div>
+                    <h3 class="summary-heading">Estimated Cost</h3>
+                    <div class="summary-discount-badge">🎉 Special Web Offer Applied</div>
+                    <div class="price-box">
+                        <div id="calc-original-price" class="original-price">₹2,499</div>
+                        <div id="calc-price-display" class="final-price">₹1,875</div>
+                        <div class="price-subtext">Inclusive of all government taxes & service warranty</div>
+                    </div>
+
+                    <ul class="calc-benefits">
+                        <li>🛡️ Free Re-treatment if pests return</li>
+                        <li>🌿 100% Odorless & Herbal formulation</li>
+                        <li>🕒 Flexible 1-hour appointment window</li>
+                    </ul>
+                </div>
+
+                <a href="#booking" class="btn-book-estimate">Book This Treatment Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership & Founders Section -->
+    <section id="leadership" class="section-wrapper">
+        <div class="section-title-center">
+            <span class="section-tag">Leadership & Vision</span>
+            <h2 class="section-title">Meet Our Founders</h2>
+            <p class="section-desc">Pioneering eco-friendly, family-safe, and guaranteed pest eradication across Siliguri, Bihar, and West Bengal.</p>
+        </div>
+
+        <div class="founders-grid">
+            <!-- Founder: Rawi Kumar -->
+            <div class="founder-card">
+                <div class="founder-avatar">RK</div>
+                <span class="founder-role-badge">Founder & Managing Director</span>
+                <h3 class="founder-name">Rawi Kumar</h3>
+                <p class="founder-bio">
+                    "Our vision with PestoGuard is to protect every home and family from dangerous termites, cockroaches, and pests using scientifically proven, odorless, and 100% herbal safe chemicals. We take pride in building a reliable pest-free living environment."
+                </p>
+                <a href="https://wa.me/916204139133?text=Hi%20Rawi%20Kumar%2C%20I%20would%20like%20to%20connect%20regarding%20PestoGuard%20services." target="_blank" class="founder-whatsapp-btn">
+                    <span>💬 WhatsApp Founder: Rawi Kumar</span>
+                </a>
+            </div>
+
+            <!-- Co-Founder: Rahul Sharma -->
+            <div class="founder-card">
+                <div class="founder-avatar">RS</div>
+                <span class="founder-role-badge">Co-Founder & Head of Operations</span>
+                <h3 class="founder-name">Rahul Sharma</h3>
+                <p class="founder-bio">
+                    "Managing a rapid 500 KM coverage network across Siliguri, Purnia, Katihar, Kishanganj, Bahadurganj, and Thakurganj requires strict protocol. Our field technicians are equipped with advanced gear and a 90-minute doorstep arrival guarantee."
+                </p>
+                <a href="https://wa.me/916204139133?text=Hi%20Rahul%20Sharma%2C%20I%20would%20like%20to%20connect%20regarding%20PestoGuard%20services." target="_blank" class="founder-whatsapp-btn">
+                    <span>💬 WhatsApp Co-Founder: Rahul Sharma</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inspection Booking Section -->
+    <section id="booking" class="section-wrapper booking-section">
+        <div class="section-title-center">
+            <span class="section-tag">Doorstep Service</span>
+            <h2 class="section-title">Schedule a Free Inspection Visit</h2>
+            <p class="section-desc">Our certified pest technician will inspect all dark corners, moisture points, and woodwork at your preferred time.</p>
+        </div>
+
+        <div class="booking-container">
+            <form id="inspection-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="book-name">Full Name *</label>
+                        <input type="text" id="book-name" class="form-control" placeholder="e.g. Amit Sen" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-phone">Mobile Number *</label>
+                        <input type="tel" id="book-phone" class="form-control" placeholder="e.g. 916204139133" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-city">Select City / Operational Hub *</label>
+                        <select id="book-city" class="form-control" required>
+                            <option value="Siliguri">Siliguri (Hub)</option>
+                            <option value="Purnia" selected>Purnia (Hub)</option>
+                            <option value="Katihar">Katihar (Hub)</option>
+                            <option value="Kishanganj">Kishanganj (Hub)</option>
+                            <option value="Bahadurganj">Bahadurganj (Hub)</option>
+                            <option value="Thakurganj">Thakurganj (Hub)</option>
+                            <option value="Other Location (Within 500 KM)">Other Location (Within 500 KM Range)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-pest">Primary Pest Concern *</label>
+                        <select id="book-pest" class="form-control">
+                            <option value="Termite (Dimak) Control">🪵 Termite (Dimak) - Wood Damaging</option>
+                            <option value="Cockroach & Ant Combo" selected>🪳 Cockroach & Ant (Cheenti) Infestation</option>
+                            <option value="Spider & Cobweb Removal">🕷️ Spider (Makdi) & Cobwebs</option>
+                            <option value="Bedbug (Khatmal) Eradication">🛏️ Bedbugs (Khatmal)</option>
+                            <option value="Full House Comprehensive Extermination">🛡️ Full House All-in-One Pest Defense</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-date">Preferred Date</label>
+                        <input type="date" id="book-date" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-slot">Preferred Time Slot</label>
+                        <select id="book-slot" class="form-control">
+                            <option value="Morning (9 AM - 12 PM)">Morning (9:00 AM - 12:00 PM)</option>
+                            <option value="Afternoon (12 PM - 3 PM)" selected>Afternoon (12:00 PM - 3:00 PM)</option>
+                            <option value="Evening (3 PM - 7 PM)">Evening (3:00 PM - 7:00 PM)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="book-address">Service Address & Flat/House No. *</label>
+                        <textarea id="book-address" class="form-control" placeholder="e.g. Flat 402, Green Valley Apartments, Sector 14" required></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit-booking">Confirm Booking & Dispatch Technician 🚀</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why-us" class="section-wrapper">
+        <div class="section-title-center">
+            <span class="section-tag">The PestoGuard Advantage</span>
+            <h2 class="section-title">Why 10,000+ Homes Trust Us</h2>
+        </div>
+
+        <div class="pest-guide-grid">
+            <div class="pest-card">
+                <div class="pest-card-icon">🌿</div>
+                <h3>100% Pet & Child Safe</h3>
+                <p>We use botanical-based pyrethrins and targeted synthetic gel baits with zero toxic vapors or lingering chemical stench.</p>
+            </div>
+            <div class="pest-card">
+                <div class="pest-card-icon">🏆</div>
+                <h3>Certified Technicians</h3>
+                <p>Background-verified, uniform-clad technicians trained in insect biology, nest targeting, and sanitary safety protocols.</p>
+            </div>
+            <div class="pest-card">
+                <div class="pest-card-icon">⚡</div>
+                <h3>90-Minute Rapid Response</h3>
+                <p>In urgent situations like severe termite swarming or cockroach outbreaks, our team reaches your doorstep within 90 minutes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section-wrapper" style="background:#ffffff; border-top: 1px solid #e2e8f0;">
+        <div class="section-title-center">
+            <span class="section-tag">Frequently Asked Questions</span>
+            <h2 class="section-title">Common Pest Control Questions</h2>
+        </div>
+
+        <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px;">
+            <div class="pest-card" style="padding: 20px 24px;">
+                <h4 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 6px;">Do I need to leave my house during treatment?</h4>
+                <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem;">No! For general cockroach and ant gel treatments, our formulations are completely odorless and non-toxic. You can stay comfortably inside your home.</p>
+            </div>
+            <div class="pest-card" style="padding: 20px 24px;">
+                <h4 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 6px;">How does the anti-termite (Dimak) treatment work?</h4>
+                <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem;">We drill small, discrete 12mm holes at 1-foot intervals along your skirting boards, inject termiticide under pressure, and seal them with matching wax/cement.</p>
+            </div>
+            <div class="pest-card" style="padding: 20px 24px;">
+                <h4 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 6px;">What happens if pests reappear after treatment?</h4>
+                <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem;">All our treatments come with an ironclad service warranty. If pests return during the warranty period, we provide complete re-treatment 100% free of charge.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Confirmation Modal -->
+    <div id="booking-modal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-icon">✅</div>
+            <h3>Inspection Scheduled!</h3>
+            <p>Our team has received your request and an extermination technician will call you shortly to confirm the appointment.</p>
+            
+            <div id="modal-receipt-details" class="receipt-details">
+                <!-- Injected via JavaScript -->
+            </div>
+
+            <button id="btn-close-modal" class="btn-close-modal">Done & Close</button>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Quick Action Button -->
+    <a href="https://wa.me/916204139133?text=Hi%20PestoGuard%2C%20I%20want%20to%20inquire%20about%20pest%20control%20services%20in%20my%20area." target="_blank" class="floating-whatsapp-btn" title="Chat on WhatsApp">
+        <span class="floating-whatsapp-icon">💬</span>
+        <span>WhatsApp: +91 62041 39133</span>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h4>🛡️ PestoGuard Extermination</h4>
+                <p>Govt. Licensed Pest Extermination & Environmental Sanitation Company. Founded by <strong>Rawi Kumar</strong> & Co-Founded by <strong>Rahul Sharma</strong>.</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: #a7f3d0;">
+                    📍 Serviceable Range: <strong>Siliguri, Purnia, Katihar, Kishanganj, Bahadurganj, Thakurganj</strong> and all areas within 500 KM.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5>Our Services</h5>
+                <ul>
+                    <li><a href="#services">Termite (Dimak) Drill & Seal</a></li>
+                    <li><a href="#services">Cockroach Herbal Syringe Gel</a></li>
+                    <li><a href="#services">Ant (Cheenti) Nest Eradication</a></li>
+                    <li><a href="#services">Spider Web & Perimeter Defense</a></li>
+                    <li><a href="#services">Bedbug Thermal & Chemical Treatment</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Coverage Hubs</h5>
+                <ul>
+                    <li><a href="#service-areas">Siliguri Regional Hub</a></li>
+                    <li><a href="#service-areas">Purnia Operations Center</a></li>
+                    <li><a href="#service-areas">Katihar Junction Branch</a></li>
+                    <li><a href="#service-areas">Kishanganj & Border Belt</a></li>
+                    <li><a href="#service-areas">Bahadurganj & Thakurganj Hubs</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Direct Contact</h5>
+                <ul>
+                    <li>📞 24x7 Helpline: <a href="tel:+916204139133" style="color:#6ee7b7; font-weight:700;">+91 62041 39133</a></li>
+                    <li>💬 WhatsApp: <a href="https://wa.me/916204139133" target="_blank" style="color:#25D366; font-weight:700;">+91 62041 39133</a></li>
+                    <li>✉️ support@pestoguard.com</li>
+                    <li>👤 Founder: Rawi Kumar</li>
+                    <li>👤 Co-Founder: Rahul Sharma</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 PestoGuard Inc. Founded by Rawi Kumar & Rahul Sharma. All rights reserved.</span>
+            <span>Upto 500 KM Service Radius • Child & Pet Safe Certified • CIB Govt Approved</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="audio.js"></script>
+    <script src="pests.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
